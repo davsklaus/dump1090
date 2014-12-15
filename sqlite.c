@@ -87,7 +87,7 @@ sql = sqlite3_mprintf( "INSERT INTO flights (modes, df, msgs) VALUES ('%06X', '%
     /* DF17 *with or without position data */
 
   if (mm->msgtype == 17) {
-sql = sqlite3_mprintf( "INSERT OR IGNORE INTO flightslog (df, flight, airline, modes, alt, vr, lat, lon, speed, heading, msgs) VALUES ('%d', '%s', '%3s', '%06X', '%d', '%d', '%1.5f', '%1.5f', '%d', '%d', '%ld'); UPDATE flightslog SET df='%d',flight='%s',airline='%3s',modes='%06X',alt='%d',vr='%d',lat='%1.5f',lon='%1.5f',speed='%d',heading='%d',msgs='%ld',last_update=CURRENT_TIMESTAMP WHERE modes='%06X';",mm->msgtype, a->flight, a->flight, mm->addr, mm->altitude, mm->vert_rate, a->lat, a->lon, a->speed,a->track, a->messages
+  sql = sqlite3_mprintf( "INSERT OR IGNORE INTO flightslog (df, flight, airline, modes, alt, vr, lat, lon, speed, heading, msgs) VALUES ('%d', '%s', '%3s', '%06X', '%d', '%d', '%1.5f', '%1.5f', '%d', '%d', '%ld'); UPDATE flightslog SET df='%d',flight='%s',airline='%3s',modes='%06X',alt='%d',vr='%d',lat='%1.5f',lon='%1.5f',speed='%d',heading='%d',msgs='%ld',last_update=CURRENT_TIMESTAMP WHERE modes='%06X';",mm->msgtype, a->flight, a->flight, mm->addr, mm->altitude, mm->vert_rate, a->lat, a->lon, a->speed,a->track, a->messages
 ,mm->msgtype, a->flight, a->flight, mm->addr, mm->altitude, mm->vert_rate, a->lat, a->lon, a->speed, a->track, a->messages);
   rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
   if( rc != SQLITE_OK ){
