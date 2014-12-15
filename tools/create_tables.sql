@@ -21,8 +21,11 @@ CREATE TABLE trackslog (
     id          INTEGER            PRIMARY KEY AUTOINCREMENT,
     modes       CHAR( 6 ),
     alt         INT( 6 ),
+    vr          SMALLINT( 2 ),
     lat         DECIMAL( 17, 14 ),
     lon         DECIMAL( 17, 14 ),
+    heading     INT( 6 ),
+    speed       INT( 6 ),
     last_update TIMESTAMP          DEFAULT ( CURRENT_TIMESTAMP ) 
 );
 
