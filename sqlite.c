@@ -98,7 +98,7 @@ sql = sqlite3_mprintf( "INSERT INTO flights (modes, df, msgs) VALUES ('%06X', '%
    }
 
   sql = sqlite3_mprintf( "INSERT OR IGNORE INTO trackslog (modes, alt, vr, lat, lon, speed, heading, last_update) VALUES ('%06X', '%d', '%d', '%1.5f', '%1.5f', '%d', '%d', CURRENT_TIMESTAMP);" , \
-          mm->addr, mm->altitude, mm->vert_rate, a->lat, a->lon, a->speed, a->track);
+          a->addr, a->altitude, a->vert_rate, a->lat, a->lon, a->speed, a->track);
   rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
   if( rc != SQLITE_OK ){
    fprintf(stderr, "SQL error: %s\n", zErrMsg);
