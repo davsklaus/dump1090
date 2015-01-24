@@ -1,6 +1,9 @@
 import sqlite3 as lite
 import math
 import datetime
+import os.path
+import sys
+import argparse
 
 # constants and globals
 gFollowICAO='XX'
@@ -87,12 +90,20 @@ def main2(csvfile):
     return thelist
 
 if __name__=="__main__":
-    dbfile="../basestation.sqb"
-    available_dates = finddates(dbfile)
+    parser = argparse.ArgumentParser("Simple analysis of dump1090 database")
+    parser.add_argument("dbfile", nargs="?", help="SQlite database file to use (default: %(default)s)", default="basestation.sqb")
+    args = parser.parse_args()
+
+    if not os.path.isfile(args.dbfile):
+        print "ERROR: file '{0}' does not exist\n".format(args.dbfile)
+        parser.print_help()
+        sys.exit(1)
+
+    available_dates = finddates(args.dbfile)
 
     print "# (dist, az, lat, lon, alt, last_update)"
     for adate in available_dates:
-        thelist = main(dbfile, adate)
+        thelist = main(args.dbfile, adate)
 
 
         furthest = max(thelist, key=lambda x: x[0])
@@ -100,7 +111,7 @@ if __name__=="__main__":
         pretty_print(furthest)
 
     today = datetime.date.today().isoformat()
-    thelist = main(dbfile, today)
+    thelist = main(args.dbfile, today)
     #thelist = main2("dump.csv")
 
     # Show to 25 entries
